@@ -1,10 +1,10 @@
 import Immutable from "immutable";
 import DeLorean from 'delorean';
 
-import Colors from "../colors";
-import Sizes from "../sizes";
-import Tools from "../tools";
-import Textures from "../textures";
+import Colors from "../values/colors";
+import Sizes from "../values/sizes";
+import Tools from "../values/tools";
+import Textures from "../values/textures";
 
 let GraphicStore = DeLorean.Flux.createStore({ 
   data: {

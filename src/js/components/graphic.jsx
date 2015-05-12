@@ -1,12 +1,12 @@
 import React from "react";
 import Immutable from "immutable";
+
 import GraphicStore from '../stores/graphic_store';
 import GraphicActions from '../actions/graphic_actions';
-
-import Colors from "../colors";
-import Sizes from "../sizes";
-import Tools from "../tools";
-import Textures from "../textures";
+import Colors from "../values/colors";
+import Sizes from "../values/sizes";
+import Tools from "../values/tools";
+import Textures from "../values/textures";
 
 var Graphic = React.createClass({
   getInitialState: function() {
