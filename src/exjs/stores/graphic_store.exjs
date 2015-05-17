@@ -4,7 +4,6 @@ defmodule Stores.GraphicStore do
   alias Values.Colors
   alias Values.Sizes
   alias Values.Tools
-  alias Mutable
 
   def create_store() do
     Delorean.Flux.createStore(%{ 

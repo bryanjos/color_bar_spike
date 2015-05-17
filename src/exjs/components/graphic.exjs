@@ -1,7 +1,6 @@
 defmodule Components.Graphic do
   alias React
   alias Immutable
-  alias Mutable
   alias Stores.GraphicStore
   alias Actions.GraphicActions
   alias Values.Tools

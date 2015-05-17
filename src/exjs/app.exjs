@@ -1,7 +1,6 @@
 defmodule App do
   alias Delorean
   alias Components.App, as: ReactApp
-  alias Mutable
   alias Stores.GraphicStore
 
   @graphic_store GraphicStore.create_store()
