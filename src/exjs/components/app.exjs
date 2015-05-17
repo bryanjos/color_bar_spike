@@ -1,0 +1,10 @@
+defmodule Components.App do
+  alias React
+  alias Components.Layout
+
+  def start() do
+    Layout.create_class()
+    |> React.createElement
+    |> React.render(:document.getElementById("main"))
+  end
+end

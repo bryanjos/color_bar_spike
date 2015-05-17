@@ -3,14 +3,13 @@ import Immutable from "immutable";
 
 import GraphicStore from '../stores/graphic_store';
 import GraphicActions from '../actions/graphic_actions';
-import Colors from "../values/colors";
-import Sizes from "../values/sizes";
+
 import Tools from "../values/tools";
 import Textures from "../values/textures";
 
 var Graphic = React.createClass({
   getInitialState: function() {
-    return GraphicStore.data;
+    return App.Dispatcher.stores.graphic.data;
   },
 
   getRawCanvas: function(){
@@ -22,12 +21,12 @@ var Graphic = React.createClass({
   },
 
   componentDidMount: function() {
-    GraphicStore.listener.addListener('change', this._onChange);
+    App.Dispatcher.stores.graphic.listener.addListener('change', this._onChange);
     this.paint(this.state, this.getContext());
   },
 
   componentWillUnmount: function() {
-    GraphicStore.listener.removeListener('change', this._onChange);
+    App.Dispatcher.stores.graphic.listener.removeListener('change', this._onChange);
   },
 
   componentDidUpdate: function() {
@@ -35,7 +34,7 @@ var Graphic = React.createClass({
   },
 
   _onChange: function() {
-    this.replaceState(GraphicStore.data);
+    this.replaceState(App.Dispatcher.stores.graphic.data);
   },
 
   paint: function(data, context){
@@ -61,9 +60,9 @@ var Graphic = React.createClass({
       context.stroke();
     }
 
-    if(data.currentTool == Tools.crayon) {
+    if(data.currentTool == Tools.crayon()) {
       context.globalAlpha = 0.4;
-      context.drawImage(Textures.crayon, 0, 0, context.canvas.width, context.canvas.height);
+      context.drawImage(Textures.crayon(), 0, 0, context.canvas.width, context.canvas.height);
     }
     
     context.globalAlpha = 1;
@@ -84,7 +83,7 @@ var Graphic = React.createClass({
     let mouseX = event.pageX - canvas.offsetLeft;
     let mouseY = event.pageY - canvas.offsetTop;
 
-    if(GraphicStore.data.paint){
+    if(this.state.paint){
       GraphicActions.addPoint({ x: mouseX, y: mouseY, dragging: true });       
     }
   },

@@ -1,0 +1,90 @@
+defmodule Components.Layout do
+  alias React
+  alias Components.Graphic
+
+  def create_class() do
+    React.createClass(%{
+      displayName: "Layout",
+
+      getInitialState: fn() -> %{} end,
+
+      render: fn() ->
+
+        React.DOM.div(%{},
+          React.DOM.div(
+            %{className: "toolArea"},
+            React.DOM.span(
+              %{className: "toolTitle"},
+              nil,
+              "Tools"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Marker"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Eraser"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Crayon"
+            )
+          ),
+          React.DOM.div(
+            %{className: "toolArea"},
+            React.DOM.span(
+              %{className: "toolTitle"},
+              nil,
+              "Sizes"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Small"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Medium"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Large"
+            )
+          ),
+          React.DOM.div(
+            %{className: "toolArea"},
+            React.DOM.span(
+              %{className: "toolTitle"},
+              nil,
+              "Colors"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Black"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Purple"
+            ),
+            React.DOM.button(
+              %{className: "toolButton"},
+              nil,
+              "Green"
+            )
+          ),
+          React.createElement(Graphic.create_class())
+        )
+
+      end
+    })
+
+  end
+end

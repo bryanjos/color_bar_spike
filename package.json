@@ -23,6 +23,7 @@
   "jspm": {
     "directories": {},
     "dependencies": {
+      "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "delorean": "npm:delorean@^0.9.3",
       "fabric": "npm:fabric@^1.5.0",
       "immutable": "npm:immutable@^3.7.2",

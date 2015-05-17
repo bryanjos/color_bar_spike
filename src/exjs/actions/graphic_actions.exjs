@@ -1,0 +1,13 @@
+defmodule Actions.GraphicActions do
+  def startPainting() do
+    App.Dispatcher.startPainting()
+  end
+
+  def stopPainting() do
+    App.Dispatcher.stopPainting()
+  end
+
+  def addPoint(data) do
+    App.Dispatcher.addPoint(data)
+  end
+end

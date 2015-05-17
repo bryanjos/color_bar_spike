@@ -1,0 +1,5 @@
+defmodule Values.Textures do
+  def crayon() do
+    "/images/crayon-texture.png"
+  end
+end

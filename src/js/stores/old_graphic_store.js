@@ -1,12 +1,11 @@
 import Immutable from "immutable";
-import DeLorean from 'delorean';
+import Delorean from 'delorean';
 
 import Colors from "../values/colors";
 import Sizes from "../values/sizes";
 import Tools from "../values/tools";
-import Textures from "../values/textures";
 
-let GraphicStore = DeLorean.Flux.createStore({ 
+let GraphicStore = Delorean.Flux.createStore({ 
   data: {
     paint: false,
     clickX: [],
@@ -15,9 +14,9 @@ let GraphicStore = DeLorean.Flux.createStore({
     clickColor: [],
     clickSize: [],
     clickTool: [],
-    currentColor: Colors.black,
-    currentSize: Sizes.small,
-    currentTool: Tools.marker   
+    currentColor: Colors.black(),
+    currentSize: Sizes.small(),
+    currentTool: Tools.marker()   
   },
 
   startPainting: function () { 
@@ -36,8 +35,8 @@ let GraphicStore = DeLorean.Flux.createStore({
     this.data.clickDrag.push(dragging);
     this.data.clickSize.push(this.data.currentSize);
 
-    if(this.data.currentTool == Tools.eraser){
-      this.data.clickColor.push(Colors.white);
+    if(this.data.currentTool == Tools.eraser()){
+      this.data.clickColor.push(Colors.white());
     }else{
       this.data.clickColor.push(this.data.currentColor);
     }

@@ -1,0 +1,51 @@
+defmodule Stores.GraphicStore do
+  alias Immutable
+  alias Delorean
+  alias Values.Colors
+  alias Values.Sizes
+  alias Values.Tools
+  alias Mutable
+
+  def create_store() do
+    Delorean.Flux.createStore(%{ 
+      data: %{
+        paint: false,
+        clickX: [],
+        clickY: [],
+        clickDrag: [],
+        clickColor: [],
+        clickSize: [],
+        clickTool: [],
+        currentColor: Colors.black(),
+        currentSize: Sizes.small(),
+        currentTool: Tools.marker()   
+      },
+
+      startPainting: fn() -> 
+        Mutable.update(this.data, "paint", true)
+        this.emit("change") 
+      end, 
+
+      stopPainting: fn() -> 
+        Mutable.update(this.data, "paint", false)
+        this.emit("change") 
+      end, 
+
+      addPoint: fn(%{x: x, y: y, dragging: dragging}) ->
+        this.data.clickX.push(x)
+        this.data.clickY.push(y)
+        this.data.clickDrag.push(dragging)
+        this.data.clickSize.push(this.data.currentSize)
+        this.data.clickColor.push(this.data.currentColor)
+        this.emit("change") 
+      end,
+
+      actions: %{ 
+        "startPainting": "startPainting",
+        "stopPainting": "stopPainting",
+        "addPoint": "addPoint" 
+      }
+
+    })
+  end
+end

@@ -1,0 +1,26 @@
+defmodule Values.Colors do
+
+  def black() do
+    "#000000"
+  end
+
+  def purple() do
+    "#cb3594"
+  end
+
+  def green() do
+    "#659b41"
+  end
+
+  def yellow() do
+    "#ffcf33"
+  end
+
+  def brown() do
+    "#986928"
+  end
+
+  def white() do
+    "#FFFFFF";
+  end
+end

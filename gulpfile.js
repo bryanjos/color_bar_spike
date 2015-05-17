@@ -31,7 +31,7 @@ gulp.task('build-exjs', ['build-elixir-lib'], function() {
   return gulp.src(exjsSrc)
   .pipe(plumber())
   .pipe(spawn({ cmd: '/usr/local/ex2js/bin/ex2js', args: ["-st"] }))
-  .pipe(babel({sourceMap: false, modules:'system'}))
+  //.pipe(babel({sourceMap: false, modules:'system'}))
   .pipe(rename({extname: '.js'}))
   .pipe(gulp.dest(jsDest));
 });

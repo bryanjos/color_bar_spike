@@ -17,6 +17,7 @@ System.config({
   "map": {
     "babel": "npm:babel-core@5.2.17",
     "babel-runtime": "npm:babel-runtime@5.2.17",
+    "bootstrap": "github:twbs/bootstrap@3.3.4",
     "core-js": "npm:core-js@0.9.7",
     "delorean": "npm:delorean@0.9.3",
     "fabric": "npm:fabric@1.5.0",
@@ -93,6 +94,9 @@ System.config({
     },
     "github:jspm/nodelibs-zlib@0.1.0": {
       "browserify-zlib": "npm:browserify-zlib@0.1.4"
+    },
+    "github:twbs/bootstrap@3.3.4": {
+      "jquery": "github:components/jquery@2.1.4"
     },
     "npm:amdefine@0.1.0": {
       "fs": "github:jspm/nodelibs-fs@0.1.2",
