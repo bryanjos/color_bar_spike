@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var browserSync = require('browser-sync');
+var exec = require('child_process').exec;
 
 var cssSrc = 'src/css/*.scss';
 var cssDest = 'dest/css';
@@ -27,25 +28,18 @@ gulp.task('build-sass', function() {
       .pipe(gulp.dest(cssDest));
 });
 
-gulp.task('build-exjs', ['build-elixir-lib'], function() {
-  return gulp.src(exjsSrc)
-  .pipe(plumber())
-  .pipe(spawn({ cmd: '/usr/local/ex2js/bin/ex2js', args: ["-st"] }))
-  //.pipe(babel({sourceMap: false, modules:'system'}))
-  .pipe(rename({extname: '.js'}))
-  .pipe(gulp.dest(jsDest));
+gulp.task('build-exjs', function(cb) {
+  exec('/usr/local/ex2js/bin/ex2js "' + exjsSrc + '" -o ' + "src/js", function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
 });
 
-gulp.task('build-elixir-lib', function() {
-  return gulp.src("/usr/local/ex2js/elixir.js")
-  .pipe(babel({sourceMap: false}))
-  .pipe(gulp.dest(jsDest));
-});
-
-gulp.task('build-js', function() {
+gulp.task('build-js', ['build-exjs'], function() {
   return gulp.src(jsSrc)
       .pipe(plumber())
-      .pipe(babel({sourceMap: false, modules:'system'}))
+      .pipe(babel({sourceMap: false, modules: 'system'}))
       .pipe(gulp.dest(jsDest));
 });
 
@@ -67,7 +61,7 @@ gulp.task('serve', ['build'], function(done) {
 
 
 gulp.task('watch', ['serve'], function() {
-  gulp.watch([exjsSrc, jsSrc, cssSrc, 'index.html'], ['build']).on('change', reportChange);
+  gulp.watch([exjsSrc, cssSrc, 'index.html'], ['build']).on('change', reportChange);
 });
 
 
