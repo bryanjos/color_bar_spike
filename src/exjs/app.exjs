@@ -1,11 +1,10 @@
 defmodule App do
-  alias Delorean
   alias Components.App, as: ReactApp
-  alias Stores.GraphicStore
+  alias Delorean
 
-  @graphic_store GraphicStore.create_store()
+  @graphic_store Stores.GraphicStore.create_store()
 
-  @dispatcher Delorean.Flux.createDispatcher(%{
+  @dispatcher Delorean["Flux"].createDispatcher(%{
     startPainting: fn() -> this.dispatch("startPainting") end,
     stopPainting: fn() -> this.dispatch("stopPainting") end,
     addPoint: fn(data) -> this.dispatch("addPoint", data) end,
@@ -13,7 +12,7 @@ defmodule App do
   })
 
   def main() do
-    Mutable.update(window, "App", %{Dispatcher: @dispatcher })
+    Mutable.update(window, "App", %{ "Dispatcher": @dispatcher })
     ReactApp.start()
   end
 

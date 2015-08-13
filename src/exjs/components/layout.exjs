@@ -10,71 +10,71 @@ defmodule Components.Layout do
 
       render: fn() ->
 
-        React.DOM.div(%{},
-          React.DOM.div(
+        React["DOM"].div(%{},
+          React["DOM"].div(
             %{className: "toolArea"},
-            React.DOM.span(
+            React["DOM"].span(
               %{className: "toolTitle"},
               nil,
               "Tools"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Marker"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Eraser"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Crayon"
             )
           ),
-          React.DOM.div(
+          React["DOM"].div(
             %{className: "toolArea"},
-            React.DOM.span(
+            React["DOM"].span(
               %{className: "toolTitle"},
               nil,
               "Sizes"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Small"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Medium"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Large"
             )
           ),
-          React.DOM.div(
+          React["DOM"].div(
             %{className: "toolArea"},
-            React.DOM.span(
+            React["DOM"].span(
               %{className: "toolTitle"},
               nil,
               "Colors"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Black"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Purple"
             ),
-            React.DOM.button(
+            React["DOM"].button(
               %{className: "toolButton"},
               nil,
               "Green"

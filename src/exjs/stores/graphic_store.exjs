@@ -6,7 +6,7 @@ defmodule Stores.GraphicStore do
   alias Values.Tools
 
   def create_store() do
-    Delorean.Flux.createStore(%{ 
+    Delorean["Flux"].createStore(%{ 
       data: %{
         paint: false,
         clickX: [],
@@ -20,12 +20,12 @@ defmodule Stores.GraphicStore do
         currentTool: Tools.marker()   
       },
 
-      startPainting: fn() -> 
+      startPainting: fn(_) -> 
         Mutable.update(this.data, "paint", true)
         this.emit("change") 
       end, 
 
-      stopPainting: fn() -> 
+      stopPainting: fn(_) -> 
         Mutable.update(this.data, "paint", false)
         this.emit("change") 
       end, 
