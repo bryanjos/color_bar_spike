@@ -1,6 +1,8 @@
 defmodule Components.Graphic do
-  alias React
-  alias Immutable
+  JS.import React, "react"
+  JS.import Immutable, "immutable"
+  JS.import Delorean, "delorean"
+  
   alias Stores.GraphicStore
   alias Actions.GraphicActions
   alias Values.Tools
@@ -8,34 +10,34 @@ defmodule Components.Graphic do
 
   def create_class() do
     React.createClass(%{
-      getInitialState: fn() -> App["Dispatcher"].stores.graphic.data end,
+      "getInitialState" => fn() -> App.Dispatcher.stores.graphic.data end,
 
-      getRawCanvas: fn() ->  React.findDOMNode(this) end,
+      "getRawCanvas" => fn() ->  React.findDOMNode(this) end,
 
-      getContext: fn() -> :this.getRawCanvas().getContext("2d") end,
+      "getContext" => fn() -> this.getRawCanvas().getContext("2d") end,
 
-      componentDidMount: fn() ->
-        App["Dispatcher"].stores.graphic.listener.addListener("change", this["_onChange"])
+      "componentDidMount" => fn() ->
+        App.Dispatcher.stores.graphic.listener.addListener("change", this["_onChange"])
         this.paint(this.state, this.getContext())
       end,
 
-      componentWillUnmount: fn() ->
-        App["Dispatcher"].stores.graphic.listener.removeListener("change", this["_onChange"])
+      "componentWillUnmount" => fn() ->
+        App.Dispatcher.stores.graphic.listener.removeListener("change", this["_onChange"])
       end,
 
-      componentDidUpdate: fn(_, _, _) ->
+      "componentDidUpdate" => fn(_, _, _) ->
         this.paint(this.state, this.getContext())
       end,
 
-      _onChange: fn() ->
-        this.replaceState(App["Dispatcher"].stores.graphic.data)
+      "_onChange" => fn() ->
+        this.replaceState(App.Dispatcher.stores.graphic.data)
       end,
 
-      paint: fn(data, context) ->
+      "paint" => fn(data, context) ->
         context.clearRect(0, 0, context.canvas.width, context.canvas.height)
         context.save()
         
-        Mutable.update(context, "lineJoin", "round")
+        JS.update(context, "lineJoin", "round")
         Enum.map_reduce(data.clickX, 0, fn(x, i)->
           context.beginPath()
 
@@ -48,57 +50,57 @@ defmodule Components.Graphic do
           context.lineTo(data.clickX[i], data.clickY[i])
           context.closePath()
 
-          Mutable.update(context, "strokeStyle", data.clickColor[i])
-          Mutable.update(context, "lineWidth", data.clickSize[i])
+          JS.update(context, "strokeStyle", data.clickColor[i])
+          JS.update(context, "lineWidth", data.clickSize[i])
           context.stroke()          
           {nil, i + 1}
         end)
 
         if data.currentTool == Tools.crayon() do
-          Mutable.update(context, "globalAlpha", 0.4)
+          JS.update(context, "globalAlpha", 0.4)
           context.drawImage(Textures.crayon(), 0, 0, context.canvas.width, context.canvas.height)
         end
 
-        Mutable.update(context.globalAlpha, 1)
+        JS.update(context, "globalAlpha", 1)
         context.restore()
       end,
 
-      onMouseMoveHandler: fn(event, _) ->
+      "onMouseMoveHandler" => fn(event, _) ->
         canvas = this.getRawCanvas()
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
         if(this.state.paint) do
-          GraphicActions.addPoint(%{ x: mouseX, y: mouseY, dragging: true })       
+          GraphicActions.addPoint(%{ "x" => mouseX, "y" => mouseY, "dragging" => true })       
         end
       end,
 
-      onMouseDownHandler: fn(event, _) ->
+      "onMouseDownHandler" => fn(event, _) ->
         canvas = this.getRawCanvas()
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
         GraphicActions.startPainting()
-        GraphicActions.addPoint(%{ x: mouseX, y: mouseY, dragging: false })
+        GraphicActions.addPoint(%{ "x" => mouseX, "y" => mouseY, "dragging" => false })
       end,
 
-      onMouseUpHandler: fn(event, _) ->
+      "onMouseUpHandler" => fn(event, _) ->
         GraphicActions.stopPainting()
       end,
 
-      onMouseLeaveHandler: fn(event, _) ->
+      "onMouseLeaveHandler" => fn(event, _) ->
         GraphicActions.stopPainting()
       end,
 
-      render: fn() ->
-        React["DOM"].canvas(%{
-          className: "drawingArea",
-          width: 800,
-          height: 600,
-          onMouseDown: this["onMouseDownHandler"],
-          onMouseMove: this["onMouseMoveHandler"],
-          onMouseUp: this["onMouseUpHandler"],
-          onMouseLeave: this["onMouseLeaveHandler"]
+      "render" => fn() ->
+        React.DOM.canvas(%{
+         "className" => "drawingArea",
+         "width" => 800,
+         "height" => 600,
+         "onMouseDown" => this["onMouseDownHandler"],
+         "onMouseMove" => this["onMouseMoveHandler"],
+         "onMouseUp" => this["onMouseUpHandler"],
+         "onMouseLeave" => this["onMouseLeaveHandler"]
         })
       end
 

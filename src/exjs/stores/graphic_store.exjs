@@ -1,43 +1,46 @@
 defmodule Stores.GraphicStore do
-  alias Immutable
-  alias Delorean
-  alias Values.Colors
+  JS.import Immutable, "immutable"
+  JS.import Delorean, "delorean"
+
+  import Values.Colors
+  import Values.Tools, except: [:crayon]
+
   alias Values.Sizes
   alias Values.Tools
 
   def create_store() do
-    Delorean["Flux"].createStore(%{ 
-      data: %{
-        paint: false,
-        clickX: [],
-        clickY: [],
-        clickDrag: [],
-        clickColor: [],
-        clickSize: [],
-        clickTool: [],
-        currentColor: Colors.black(),
-        currentSize: Sizes.small(),
-        currentTool: Tools.marker()   
+    Delorean.Flux.createStore(%{ 
+      "data" => %{
+        "paint" => false,
+        "clickX" => [],
+        "clickY" => [],
+        "clickDrag" => [],
+        "clickColor" => [],
+        "clickSize" => [],
+        "clickTool" => [],
+        "currentColor" => black(),
+        "currentSize" => Sizes.small(),
+        "currentTool" => marker()   
       },
 
-      startPainting: fn(_) -> 
-        Mutable.update(this.data, "paint", true)
+      "startPainting" => fn(_) -> 
+        JS.update(this.data, "paint", true)
         this.emit("change") 
       end, 
 
-      stopPainting: fn(_) -> 
-        Mutable.update(this.data, "paint", false)
+      "stopPainting" => fn(_) -> 
+        JS.update(this.data, "paint", false)
         this.emit("change") 
       end, 
 
-      addPoint: fn(%{x: x, y: y, dragging: dragging}) ->
+      "addPoint" => fn(%{"x" => x, "y" => y, "dragging" => dragging}) ->
         this.data.clickX.push(x)
         this.data.clickY.push(y)
         this.data.clickDrag.push(dragging)
         this.data.clickSize.push(this.data.currentSize)
 
-        if this.data.currentTool == Tools.eraser() do
-          this.data.clickColor.push(Colors.white())
+        if this.data.currentTool == eraser() do
+          this.data.clickColor.push(white())
         else
           this.data.clickColor.push(this.data.currentColor)
         end
@@ -45,10 +48,10 @@ defmodule Stores.GraphicStore do
         this.emit("change") 
       end,
 
-      actions: %{ 
-        "startPainting": "startPainting",
-        "stopPainting": "stopPainting",
-        "addPoint": "addPoint" 
+      "actions" => %{ 
+        "startPainting" => "startPainting",
+        "stopPainting" => "stopPainting",
+        "addPoint" => "addPoint" 
       }
 
     })

@@ -1,9 +1,8 @@
 defmodule Components.App do
-  alias React
-  alias Components.Layout
+  JS.import React, "react"
 
   def start() do
-    Layout.create_class()
+    Components.Layout.create_class()
     |> React.createElement
     |> React.render(:document.getElementById("main"))
   end
