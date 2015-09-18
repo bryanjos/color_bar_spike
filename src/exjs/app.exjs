@@ -8,7 +8,9 @@ defmodule App do
     "startPainting" => fn -> this.dispatch("startPainting") end,
     "stopPainting" => fn -> this.dispatch("stopPainting") end,
     "addPoint" => fn(data) -> this.dispatch("addPoint", data) end,
-    "getStores" => fn -> %{ "graphic" => @graphic_store } end
+    "getStores" => fn -> %{ "graphic" => @graphic_store } end,
+    "changeColor" => fn(color) -> this.dispatch("changeColor", color) end,
+    "changeSize" => fn(size) -> this.dispatch("changeSize", size) end
   })
 
   def main() do

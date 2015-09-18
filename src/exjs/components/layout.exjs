@@ -1,4 +1,8 @@
 defmodule Components.Layout do
+  alias Actions.GraphicActions
+  import Values.Colors
+  import Values.Sizes
+
   JS.import React, "react"
 
   def create_class() do
@@ -15,43 +19,29 @@ defmodule Components.Layout do
             React.DOM.span(
               %{"className" => "toolTitle"},
               nil,
-              "Tools"
-            ),
-            React.DOM.button(
-              %{"className" => "toolButton"},
-              nil,
-              "Marker"
-            ),
-            React.DOM.button(
-              %{"className" => "toolButton"},
-              nil,
-              "Eraser"
-            ),
-            React.DOM.button(
-              %{"className" => "toolButton"},
-              nil,
-              "Crayon"
-            )
-          ),
-          React.DOM.div(
-            %{"className" => "toolArea"},
-            React.DOM.span(
-              %{"className" => "toolTitle"},
-              nil,
               "Sizes"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> GraphicActions.changeSize(small()) end
+                },
               nil,
               "Small"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> GraphicActions.changeSize(medium()) end
+                },
               nil,
               "Medium"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> GraphicActions.changeSize(large()) end
+              },
               nil,
               "Large"
             )
@@ -64,17 +54,28 @@ defmodule Components.Layout do
               "Colors"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> GraphicActions.changeColor(black()) end
+              },
               nil,
               "Black"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> GraphicActions.changeColor(purple()) end
+              },
               nil,
               "Purple"
             ),
             React.DOM.button(
-              %{"className" => "toolButton"},
+              %{
+                "className" => "toolButton",
+                "onClick" => fn(_, _) -> 
+                  GraphicActions.changeColor(green()) 
+                end
+              },
               nil,
               "Green"
             )

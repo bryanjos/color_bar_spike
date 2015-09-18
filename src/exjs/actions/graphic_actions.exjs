@@ -10,4 +10,12 @@ defmodule Actions.GraphicActions do
   def addPoint(data) do
     App.Dispatcher.addPoint(data)
   end
+
+  def changeColor(color) do
+    App.Dispatcher.changeColor(color)
+  end
+
+  def changeSize(size) do
+    App.Dispatcher.changeSize(size)
+  end
 end
