@@ -10,27 +10,18 @@ defmodule Components.Graphic do
 
   def create_class() do
     React.createClass(%{
-      "getInitialState" => fn() -> App.Dispatcher.stores.graphic.data end,
+      "getInitialState" => fn() -> nil end,
 
       "getRawCanvas" => fn() ->  React.findDOMNode(this) end,
 
       "getContext" => fn() -> this.getRawCanvas().getContext("2d") end,
 
       "componentDidMount" => fn() ->
-        App.Dispatcher.stores.graphic.listener.addListener("change", this["_onChange"])
-        this.paint(this.state, this.getContext())
-      end,
+        outerScope = this
 
-      "componentWillUnmount" => fn() ->
-        App.Dispatcher.stores.graphic.listener.removeListener("change", this["_onChange"])
-      end,
-
-      "componentDidUpdate" => fn(_, _, _) ->
-        this.paint(this.state, this.getContext())
-      end,
-
-      "_onChange" => fn() ->
-        this.replaceState(App.Dispatcher.stores.graphic.data)
+        window.store.subscribe(fn() ->
+          outerScope.paint(window.store.getState(), outerScope.getContext())
+        end)
       end,
 
       "paint" => fn(data, context) ->
@@ -70,8 +61,8 @@ defmodule Components.Graphic do
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
-        if(this.state.paint) do
-          GraphicActions.addPoint(%{ "x" => mouseX, "y" => mouseY, "dragging" => true })       
+        if(window.store.getState().paint) do
+          window.store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => true }})     
         end
       end,
 
@@ -80,16 +71,16 @@ defmodule Components.Graphic do
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
-        GraphicActions.startPainting()
-        GraphicActions.addPoint(%{ "x" => mouseX, "y" => mouseY, "dragging" => false })
+        window.store.dispatch(%{"type" => :startPainting})
+        window.store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => false }}) 
       end,
 
       "onMouseUpHandler" => fn(event, _) ->
-        GraphicActions.stopPainting()
+        window.store.dispatch(%{"type" => :stopPainting})
       end,
 
       "onMouseLeaveHandler" => fn(event, _) ->
-        GraphicActions.stopPainting()
+        window.store.dispatch(%{"type" => :stopPainting})
       end,
 
       "render" => fn() ->

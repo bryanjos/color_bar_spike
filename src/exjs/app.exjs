@@ -1,20 +1,13 @@
 defmodule App do
   alias Components.App, as: ReactApp
-  JS.import Delorean, "delorean"
+  alias Stores.Store
+  
+  JS.import [createStore], "redux"
 
-  @graphic_store Stores.GraphicStore.create_store()
-
-  @dispatcher Delorean.Flux.createDispatcher(%{
-    "startPainting" => fn -> this.dispatch("startPainting") end,
-    "stopPainting" => fn -> this.dispatch("stopPainting") end,
-    "addPoint" => fn(data) -> this.dispatch("addPoint", data) end,
-    "getStores" => fn -> %{ "graphic" => @graphic_store } end,
-    "changeColor" => fn(color) -> this.dispatch("changeColor", color) end,
-    "changeSize" => fn(size) -> this.dispatch("changeSize", size) end
-  })
 
   def main() do
-    JS.update(window, "App", %{ "Dispatcher" => @dispatcher })
+    store = createStore(Store["graphics"])
+    JS.update(window, "store", store)
     ReactApp.start()
   end
 

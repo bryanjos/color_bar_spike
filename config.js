@@ -23,6 +23,7 @@ System.config({
     "fabric": "npm:fabric@1.5.0",
     "immutable": "npm:immutable@3.7.2",
     "react": "npm:react@0.14.0-alpha1",
+    "redux": "npm:redux@3.0.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
@@ -612,6 +613,9 @@ System.config({
       "stream-browserify": "npm:stream-browserify@1.0.0",
       "string_decoder": "npm:string_decoder@0.10.31",
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:redux@3.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:request@2.55.0": {
       "aws-sign2": "npm:aws-sign2@0.5.0",

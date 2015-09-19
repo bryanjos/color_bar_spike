@@ -30,7 +30,9 @@ gulp.task('build-exjs', function(cb) {
 gulp.task('build-js', ['build-exjs'], function() {
   return gulp.src(jsSrc)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(babel({sourceMap: false, modules: 'system'}))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(jsDest));
 });
 

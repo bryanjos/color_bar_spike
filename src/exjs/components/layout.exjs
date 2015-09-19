@@ -24,7 +24,7 @@ defmodule Components.Layout do
             React.DOM.button(
               %{
                 "className" => "toolButton",
-                "onClick" => fn(_, _) -> GraphicActions.changeSize(small()) end
+                "onClick" => fn(_, _) -> window.store.dispatch(%{"type" => :changeSize, "size" => small()}) end
                 },
               nil,
               "Small"
@@ -32,7 +32,7 @@ defmodule Components.Layout do
             React.DOM.button(
               %{
                 "className" => "toolButton",
-                "onClick" => fn(_, _) -> GraphicActions.changeSize(medium()) end
+                "onClick" => fn(_, _) -> window.store.dispatch(%{"type" => :changeSize, "size" => medium()}) end
                 },
               nil,
               "Medium"
@@ -40,7 +40,7 @@ defmodule Components.Layout do
             React.DOM.button(
               %{
                 "className" => "toolButton",
-                "onClick" => fn(_, _) -> GraphicActions.changeSize(large()) end
+                "onClick" => fn(_, _) -> window.store.dispatch(%{"type" => :changeSize, "size" => large()}) end
               },
               nil,
               "Large"
@@ -56,7 +56,7 @@ defmodule Components.Layout do
             React.DOM.button(
               %{
                 "className" => "toolButton",
-                "onClick" => fn(_, _) -> GraphicActions.changeColor(black()) end
+                "onClick" => fn(_, _) -> window.store.dispatch(%{"type" => :changeColor, "color" => black()}) end
               },
               nil,
               "Black"
@@ -64,7 +64,7 @@ defmodule Components.Layout do
             React.DOM.button(
               %{
                 "className" => "toolButton",
-                "onClick" => fn(_, _) -> GraphicActions.changeColor(purple()) end
+                "onClick" => fn(_, _) -> window.store.dispatch(%{"type" => :changeColor, "color" => purple()}) end
               },
               nil,
               "Purple"
@@ -73,7 +73,7 @@ defmodule Components.Layout do
               %{
                 "className" => "toolButton",
                 "onClick" => fn(_, _) -> 
-                  GraphicActions.changeColor(green()) 
+                  window.store.dispatch(%{"type" => :changeColor, "color" => green()})
                 end
               },
               nil,

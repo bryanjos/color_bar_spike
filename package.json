@@ -27,7 +27,8 @@
       "delorean": "npm:delorean@^0.9.3",
       "fabric": "npm:fabric@^1.5.0",
       "immutable": "npm:immutable@^3.7.2",
-      "react": "npm:react@^0.14.0-alpha1"
+      "react": "npm:react@^0.14.0-alpha1",
+      "redux": "npm:redux@^3.0.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.1.13",
