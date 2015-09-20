@@ -1,12 +1,7 @@
 defmodule Components.Graphic do
   JS.import React, "react"
-  JS.import Immutable, "immutable"
-  JS.import Delorean, "delorean"
-  
-  alias Stores.GraphicStore
-  alias Actions.GraphicActions
-  alias Values.Tools
-  alias Values.Textures
+
+  alias Stores.Store
 
   def create_class() do
     React.createClass(%{
@@ -19,8 +14,8 @@ defmodule Components.Graphic do
       "componentDidMount" => fn() ->
         outerScope = this
 
-        window.store.subscribe(fn() ->
-          outerScope.paint(window.store.getState(), outerScope.getContext())
+        Store.subscribe(fn() ->
+          outerScope.paint(Store.get(), outerScope.getContext())
         end)
       end,
 
@@ -47,11 +42,6 @@ defmodule Components.Graphic do
           {nil, i + 1}
         end)
 
-        if data.currentTool == Tools.crayon() do
-          JS.update(context, "globalAlpha", 0.4)
-          context.drawImage(Textures.crayon(), 0, 0, context.canvas.width, context.canvas.height)
-        end
-
         JS.update(context, "globalAlpha", 1)
         context.restore()
       end,
@@ -61,8 +51,8 @@ defmodule Components.Graphic do
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
-        if(window.store.getState().paint) do
-          window.store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => true }})     
+        if(Store.get().paint) do
+          Store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => true }})     
         end
       end,
 
@@ -71,16 +61,16 @@ defmodule Components.Graphic do
         mouseX = event.pageX - canvas.offsetLeft
         mouseY = event.pageY - canvas.offsetTop
 
-        window.store.dispatch(%{"type" => :startPainting})
-        window.store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => false }}) 
+        Store.dispatch(%{"type" => :startPainting})
+        Store.dispatch(%{"type" => :addPoint, "point" => %{ "x" => mouseX, "y" => mouseY, "dragging" => false }}) 
       end,
 
       "onMouseUpHandler" => fn(event, _) ->
-        window.store.dispatch(%{"type" => :stopPainting})
+        Store.dispatch(%{"type" => :stopPainting})
       end,
 
       "onMouseLeaveHandler" => fn(event, _) ->
-        window.store.dispatch(%{"type" => :stopPainting})
+        Store.dispatch(%{"type" => :stopPainting})
       end,
 
       "render" => fn() ->

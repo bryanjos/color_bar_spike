@@ -1,33 +1,50 @@
 defmodule Stores.Store do
   import Values.Colors
-  import Values.Tools, except: [:crayon]
-
   alias Values.Sizes
-  alias Values.Tools
 
-  defp new_state() do
+  def init() do
+    Agent.start(fn ->
+
     %{
-      "paint" => false,
-      "clickX" => [],
-      "clickY" => [],
-      "clickDrag" => [],
-      "clickColor" => [],
-      "clickSize" => [],
-      "clickTool" => [],
-      "currentColor" => black(),
-      "currentSize" => Sizes.small(),
-      "currentTool" => marker()   
+      "subscribers" => [],
+      "state" => %{
+        "paint" => false,
+        "clickX" => [],
+        "clickY" => [],
+        "clickDrag" => [],
+        "clickColor" => [],
+        "clickSize" => [],
+        "clickTool" => [],
+        "currentColor" => black(),
+        "currentSize" => Sizes.small() 
+      }
     }
+
+    end, 
+    [name: __MODULE__])
   end
 
-  def graphics(_, %{"type" => "@@redux/INIT" }) do
-    console.log("init")
-    new_state()
+  def get() do
+    Agent.get(__MODULE__, fn(x) -> x.state end)
   end
 
-  def graphics(state, %{"type" => :addPoint, "point" => %{"x" => x, "y" => y, "dragging" => dragging}}) do
-    console.log(state)
+  def subscribe(sub_fn) do
+    Agent.update(__MODULE__, fn(x) -> %{ x | "subscribers" => x.subscribers ++ [sub_fn] } end)
+  end
 
+  def dispatch(action) do
+    Agent.update(__MODULE__, fn(x) -> 
+      %{ x | "state" => graphics(x.state, action) } 
+    end)
+
+    subscribers = Agent.get(__MODULE__, fn(x) -> x.subscribers end)
+
+    Enum.each(subscribers, fn(sub_fn) ->
+      sub_fn()
+    end)
+  end
+
+  defp graphics(state, %{"type" => :addPoint, "point" => %{"x" => x, "y" => y, "dragging" => dragging}}) do
       %{state |
       "clickX" => state.clickX ++ [x],
       "clickY" => state.clickY ++ [y],
@@ -37,24 +54,20 @@ defmodule Stores.Store do
       }
   end
 
-  def graphics(state, %{ "type" => :changeColor, "color" => color }) do
+  defp graphics(state, %{ "type" => :changeColor, "color" => color }) do
     %{state | "currentColor" => color }
   end
 
-  def graphics(state, %{ "type" => :changeSize, "size" => size }) do
+  defp graphics(state, %{ "type" => :changeSize, "size" => size }) do
      %{state | "currentSize" => size }
   end
 
-  def graphics(state, %{ "type" => :startPainting }) do
-    console.log(state)
-
+  defp graphics(state, %{ "type" => :startPainting }) do
     %{state | "paint" => true }
   end
 
-  def graphics(state, %{ "type" => :stopPainting }) do
-    console.log(state)
-
+  defp graphics(state, %{ "type" => :stopPainting }) do
     %{state | "paint" => false }
   end
-  
+
 end

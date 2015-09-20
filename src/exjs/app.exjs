@@ -1,13 +1,12 @@
 defmodule App do
   alias Components.App, as: ReactApp
   alias Stores.Store
-  
+
   JS.import [createStore], "redux"
 
 
   def main() do
-    store = createStore(Store["graphics"])
-    JS.update(window, "store", store)
+    Store.init()
     ReactApp.start()
   end
 
