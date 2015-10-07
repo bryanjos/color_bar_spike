@@ -1,5 +1,5 @@
 # color_bar_spike
-Another test project for ElixirScript using React, Delorean, with a canvas element
+Another test project for ElixirScript using React with a Redux-like design using an Agent
 
 ### Requirements:
 

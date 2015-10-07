@@ -2,8 +2,6 @@ defmodule App do
   alias Components.App, as: ReactApp
   alias Stores.Store
 
-  JS.import [createStore], "redux"
-
 
   def main() do
     Store.init()
