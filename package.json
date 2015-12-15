@@ -21,7 +21,6 @@
     "jspm": "^0.15.6"
   },
   "jspm": {
-    "directories": {},
     "dependencies": {
       "bootstrap": "github:twbs/bootstrap@^3.3.4",
       "delorean": "npm:delorean@^0.9.3",
@@ -31,9 +30,9 @@
       "redux": "npm:redux@^3.0.0"
     },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.4"
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
     }
   }
 }

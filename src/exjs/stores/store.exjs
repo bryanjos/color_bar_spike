@@ -3,7 +3,7 @@ defmodule Stores.Store do
   alias Values.Sizes
 
   def init() do
-    Agent.start(fn ->
+    Elixir.Agent.start(fn ->
 
     %{
       "subscribers" => [],
@@ -16,30 +16,30 @@ defmodule Stores.Store do
         "clickSize" => [],
         "clickTool" => [],
         "currentColor" => black(),
-        "currentSize" => Sizes.small() 
+        "currentSize" => Sizes.small()
       }
     }
 
-    end, 
+    end,
     [name: __MODULE__])
   end
 
   def get() do
-    Agent.get(__MODULE__, fn(x) -> x.state end)
+    Elixir.Agent.get(__MODULE__, fn(x) -> x.state end)
   end
 
   def subscribe(sub_fn) do
-    Agent.update(__MODULE__, fn(x) -> %{ x | "subscribers" => x.subscribers ++ [sub_fn] } end)
+    Elixir.Agent.update(__MODULE__, fn(x) -> %{ x | "subscribers" => x.subscribers ++ [sub_fn] } end)
   end
 
   def dispatch(action) do
-    Agent.update(__MODULE__, fn(x) -> 
-      %{ x | "state" => graphics(x.state, action) } 
+    Elixir.Agent.update(__MODULE__, fn(x) ->
+      %{ x | "state" => graphics(x.state, action) }
     end)
 
-    subscribers = Agent.get(__MODULE__, fn(x) -> x.subscribers end)
+    subscribers = Elixir.Agent.get(__MODULE__, fn(x) -> x.subscribers end)
 
-    Enum.each(subscribers, fn(sub_fn) ->
+    Elixir.Enum.each(subscribers, fn(sub_fn) ->
       sub_fn()
     end)
   end

@@ -22,7 +22,7 @@ function reportChange(event){
 }
 
 gulp.task('build-exjs', function(cb) {
-  exec('/usr/local/ex2js/bin/ex2js "' + exjsSrc + '" -o ' + "src/js", function (err, stdout, stderr) {
+  exec('/usr/local/elixirscript/bin/elixirscript "' + exjsSrc + '" -o ' + "src/js", function (err, stdout, stderr) {
     cb(err);
   });
 });
